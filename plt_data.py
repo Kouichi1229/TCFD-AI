@@ -3,10 +3,19 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 #讀入資料
-all_df = pd.read_csv('201302 to 2020_all2.csv')
-sw_df = pd.read_csv('sw_data.csv')
+load='file_csv/'
+all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
+sw_df = pd.read_csv(load + 'sw_data.csv')
+bf_dt = pd.read_csv(load +'2014to2020gas.csv')
+df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
+df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
+df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
+df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
 
-#主要服務比例 圓餅圖
+
+
+
+#圓餅圖
 def piechart():
     plot_area = st.empty()
     labels = 'Gas', 'Device', 'Rent', 'Communication','Other'
@@ -20,34 +29,20 @@ def piechart():
     legend = ax1.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(fig1)
- 
- 
 
-#只取 使用量 與 年月份關係 / 切割資料 每年 
-gas_2013 = all_df['Consumption(m^3)'][:11]
-gas_2014 = all_df['Consumption(m^3)'][11:23]
-gas_2015 = all_df['Consumption(m^3)'][23:35]
-gas_2016 = all_df['Consumption(m^3)'][35:47]
-gas_2017 = all_df['Consumption(m^3)'][47:59]
-gas_2018 = all_df['Consumption(m^3)'][59:71]
-gas_2019 = all_df['Consumption(m^3)'][71:83]
-gas_2020 = all_df['Consumption(m^3)'][83:95]
 
 
 
 # 201302~2020 月份與使用量折線圖
 def print_everyyear_gas():
-    # グラフを書き出すためのプレースホルダを用意する
     plot_area = st.empty()
     f, ax = plt.subplots(1,1,figsize=(10,4))
-    ax.plot( all_df['Month'][:11], gas_2013, 'r.-', alpha=0.7, linewidth=2, label='2013')
-    ax.plot( all_df['Month'][11:23], gas_2014, 'g.-', alpha=0.7, linewidth=2, label='2014')
-    ax.plot( all_df['Month'][23:35], gas_2015, 'b.-', alpha=0.7, linewidth=2, label='2015')
-    ax.plot( all_df['Month'][35:47], gas_2016,  'y.-', alpha=0.7, linewidth=2, label='2016')
-    ax.plot( all_df['Month'][47:59], gas_2017,  'c.-', alpha=0.7, linewidth=2, label='2017')
-    ax.plot(all_df['Month'][59:71], gas_2018,  'm.-', alpha=0.7, linewidth=2, label='2018')
-    ax.plot(all_df['Month'][71:83], gas_2019,  'r.-', alpha=0.7, linewidth=2, label='2019')
-    ax.plot(all_df['Month'][83:95], gas_2020,  'g.-', alpha=0.7, linewidth=2, label='2020')
+    ax.plot(all_df['Month'][:11], all_df['Consumption(m^3)'][:11], label='2013')
+    for i in range(11,len(all_df['Month'])+1,12):
+        if i < len(all_df['Month']):
+            year = 2013 + (i//12)
+            ax.plot( all_df['Month'][i:i+12], all_df['Consumption(m^3)'][i:i+12], label=str(year))
+
     ax.set_xlabel('Month')
     ax.set_ylabel('Make use of gas(m^3)')
     
@@ -108,4 +103,32 @@ def print_RTmeantoTXmean():
     plot_area.pyplot(f)
 
 
+def draw_all_pcr():
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    ax.plot(bf_dt['Year'],bf_dt['Consumption(year)'],label='before')
+    ax.plot(df_PCR26['Year'],df_PCR26['Consumption(year)'],label='RCP2.6')
+    ax.plot(df_PCR45['Year'],df_PCR45['Consumption(year)'],label='RCP4.5')
+    ax.plot(df_PCR60['Year'],df_PCR60['Consumption(year)'],label='RCP6.0')
+    ax.plot(df_PCR85['Year'],df_PCR85['Consumption(year)'],label='RCP8.5')
+
+    ax.set_xlabel('Year')
+    ax.set_ylabel('make use of gas')
+
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+def draw_pcr(dfload,N):
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    ax.plot(bf_dt['Year'],bf_dt['Consumption(year)'],label='before')
+    ax.plot(dfload['Year'],dfload['Consumption(year)'],label=N)
+
+    ax.set_xlabel('Year')
+    ax.set_ylabel('make use of gas')
+
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
 

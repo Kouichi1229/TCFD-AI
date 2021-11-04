@@ -16,10 +16,10 @@ lm = LinearRegression()
 #all_df = pd.read_csv('201302 to 2020_all2.csv')
 #sw_df = pd.read_csv('sw_data.csv')
 
-
+#溫度與使用量ML
 def TXmean_and_gas_ml():
     
-    all_df = pd.read_csv('201302 to 2020_all2.csv')
+    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
     X = all_df['TX-mean']
     y = all_df['Consumption(m^3)']
 
@@ -57,10 +57,10 @@ def TXmean_and_gas_ml():
     
     plot_area.pyplot(f)
 
-
+#平均體感溫度與使用量ML
 def RTmean_and_gas_ml():
     
-    all_df = pd.read_csv('201302 to 2020_all2.csv')
+    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
     X = all_df['RT-mean']
     y = all_df['Consumption(m^3)']
 
@@ -99,11 +99,10 @@ def RTmean_and_gas_ml():
     plot_area.pyplot(f)
 
 
-
-
+# 平均體感和平均溫度 合在一起的圖
 def RtTx_and_gas_ml():
     
-    all_df = pd.read_csv('201302 to 2020_all2.csv')
+    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
     X1 = all_df['TX-mean']
     X2 = all_df['RT-mean']
     y = all_df['Consumption(m^3)']
@@ -113,6 +112,7 @@ def RtTx_and_gas_ml():
 
     X_train = np.array(x_train)
     X_train = X_train.reshape(-1,1)
+
     X_train1 = np.array(x_train1)
     X_train1 = X_train1.reshape(-1,1)
 
@@ -134,9 +134,11 @@ def RtTx_and_gas_ml():
     f, ax = plt.subplots(1,1,figsize=(8,5))
 
     ax.scatter(x_train,y_train, c='b')
+    ax.plot(x_train,Y_train,c='navy',label ="TX")
+
     ax.scatter(x_train1,y_train1, c='c')
-    ax.plot(x_train,Y_train,'navy')
-    ax.plot(x_train1,Y_train1,'royalblue')
+    ax.plot(x_train1,Y_train1,c='c', label = "RT")
+
     ax.set_xlabel('Temperature(℃)')
     ax.set_ylabel('Make use of gas(m^3)')
     legend = ax.legend()
