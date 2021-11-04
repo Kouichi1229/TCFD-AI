@@ -26,7 +26,7 @@ df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
 df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
 df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
-df_sta_data = pd.read_excel(load +'台北測站-月資料.xlsx')
+#df_sta_data = pd.read_excel(load +'台北測站-月資料.xlsx')
 # Show first data 
 ''
 
@@ -64,7 +64,7 @@ elif sidebar=='資料集和資料視覺化':
     ''
     st.subheader('測站月資料 台北、天母、士林、信義、松山、平等、社子')
     '##### 需要欄位 year(年) month(月) TX(平均溫度) RH(平均相對溼度) WD01(平均風速)'
-    st.dataframe(df_sta_data)
+    #st.dataframe(df_sta_data)
     '#### 利用需要的欄位算出體感溫度'
     st.markdown('$$體感溫度(RT) = 1.04*T+0.2*e-0.65*V-2.7$$')
     st.markdown('$$e:\cfrac{RH}{100}*6.105*exp\cfrac{17.27*T}{237.7+T}(水氣壓 單位 hpa)$$')
