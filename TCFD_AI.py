@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 # 自訂函式庫
 import plt_data  
 import ml_model
-import load_data
 
 #App name
 st.title('AI創新應用競賽-大台北TCFD')
