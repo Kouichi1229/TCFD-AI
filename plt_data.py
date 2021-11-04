@@ -132,3 +132,27 @@ def draw_pcr(dfload,N):
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)
 
+def plt_Consumption_month_bar(month):
+    df = all_df[all_df['Month']==month]
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    x=df['Date']
+    y=df['Consumption(m^3)']
+    ax.bar(x,y)
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+def draw_tempure(month):
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    df = all_df[all_df['Month']==month]
+    ax.plot(df['Date'],df['TX-mean'])
+    
+
+    ax.set_xlabel('Date-Year')
+    ax.set_ylabel('Temperature(℃)')
+
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)

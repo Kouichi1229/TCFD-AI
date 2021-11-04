@@ -2,9 +2,11 @@ import streamlit as st
 import pandas as pd 
 import numpy as np
 import matplotlib.pyplot as plt
+
 # 自訂函式庫
 import plt_data  
 import ml_model
+import load_data
 
 #App name
 st.title('AI創新應用競賽-大台北TCFD')
@@ -14,13 +16,17 @@ st.title('AI創新應用競賽-大台北TCFD')
 #        Month	RH-mean	TX-mean	WD-mean	RT-mean
 # Loading data 
 load='file_csv/'
+
 all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
 sw_df = pd.read_csv(load + 'sw_data.csv')
 bf_dt = pd.read_csv(load +'2014to2020gas.csv')
+detail_df = pd.read_csv(load +'9908_10y_detail.csv')
 df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
 df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
 df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
+df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
+df_sta_data = pd.read_excel(load +'台北測站-月資料.xlsx')
 # Show first data 
 ''
 
@@ -43,16 +49,85 @@ if sidebar=='大台北簡介':
     '##### 選擇台北、天母、士林、信義、松山、平等、社子共７個測站的平均資料做分析'
     ''
 elif sidebar=='資料集和資料視覺化':
-    st.subheader('2013/02~2020 大台北和測站資料')
+    st.subheader('取得原始資料')
+    '#### 大台北產品營收 資料集(抓取過去瓦斯收入營收資料)'
+
+    st.dataframe(detail_df)
+    
+    ''
+    '#### 公用天然氣事業氣體售價表 資料集 '
+    '###### ➜取得大台北過去單價資料'
+    st.dataframe(df_gass1)
+    ''
+    st.subheader('將取得的資料作運算取得需要的欄位')
+    st.markdown('$$\cfrac{瓦斯營收(月)}{單價(TWD/M^3)} = 月使用量(M^3)$$')
+    ''
+    st.subheader('測站月資料 台北、天母、士林、信義、松山、平等、社子')
+    '##### 需要欄位 year(年) month(月) TX(平均溫度) RH(平均相對溼度) WD01(平均風速)'
+    st.dataframe(df_sta_data)
+    '#### 利用需要的欄位算出體感溫度'
+    st.markdown('$$體感溫度(RT) = 1.04*T+0.2*e-0.65*V-2.7$$')
+    st.markdown('$$e:\cfrac{RH}{100}*6.105*exp\cfrac{17.27*T}{237.7+T}(水氣壓 單位 hpa)$$')
+    '###### ➣ T(氣溫 ℃)、e(水氣壓 hpa)、V(風速 m/sec)、RH(相對溼度 %)'
+    '##### 將七站所有資料取平均值與營收資料做結合'
+    ''
+    st.subheader('2013/02~2020 大台北和測站資料 總整理')
     # 折線圖 營收與月份關係
     st.dataframe(all_df)
     ''
+    ''
     st.subheader('資料圖視化')
+    #歷年月份總使用量
+    ''
+    st.subheader('歷年月份與總使用量長條圖')
+    month_option=st.selectbox('月份',('1','2','3','4','5','6','7','8','9','10','11','12'))
+    if month_option=='1':
+        month=1
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='2':
+        month=2
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='3':
+        month=3
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='4':
+        month=4
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='5':
+        month=5
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='6':
+        month=6
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='7':
+        month=7
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='8':
+        month=8
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='9':
+        month=9
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='10':
+        month=10
+        plt_data.plt_Consumption_month_bar(month)
+    elif month_option=='11':
+        month=11
+        plt_data.plt_Consumption_month_bar(month)
+    else:
+        month=12
+        plt_data.plt_Consumption_month_bar(month)
+
+
+
     ''
     '#### 201302~2020 個月使用量'
     plt_data.print_everyyear_gas()
     '##### ➤ 很明顯的在 6 7 8 9 月(夏季) 瓦斯使用量偏低，在 12 1 2 3 月(冬季)時偏高'
-
+    ''
+    st.subheader('歷年與月平均溫度')
+    month_v=st.slider("月份",1,12,6)
+    plt_data.draw_tempure(month_v)
     ''
     '#### 溫度與使用量分布圖'
     plt_data.print_TXmean_and_gas()

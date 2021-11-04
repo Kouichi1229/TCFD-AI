@@ -1,4 +1,4 @@
-Data,Unit-price(TWD/m^3) ,Revenue(Billion),Sticker-price(TWD/m^3),Consumption(m^3), gross margin(1 million),Month,RH-mean,TX-mean,WD-mean,RT-mean
+Date,Unit-price(TWD/m^3) ,Revenue(Billion),Sticker-price(TWD/m^3),Consumption(m^3), gross margin(1 million),Month,RH-mean,TX-mean,WD-mean,RT-mean
 2013/2/1,21.07,3.88,20.45,18438538.21,11.43189369,2,82.59821429,18.67410714,1.658035714,19.1893443
 2013/3/1,21.5,4.29,20.88,19946651.16,12.36692372,3,77.38709677,19.75806452,1.523387097,20.42882258
 2013/4/1,21.5,4.28,20.88,19885426.36,12.32896434,4,82.65384615,21.10833333,1.309166667,22.54162221
