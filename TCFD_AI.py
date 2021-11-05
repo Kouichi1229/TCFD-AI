@@ -6,6 +6,8 @@ import matplotlib.pyplot as plt
 # 自訂函式庫
 import plt_data  
 import ml_model
+import load_data as ld
+
 
 #App name
 st.title('AI創新應用競賽-大台北TCFD')
@@ -25,7 +27,7 @@ df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
 df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
 df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
-#df_sta_data = pd.read_excel(load +'台北測站-月資料.xlsx')
+
 # Show first data 
 ''
 
@@ -61,9 +63,23 @@ elif sidebar=='資料集和資料視覺化':
     st.subheader('將取得的資料作運算取得需要的欄位')
     st.markdown('$$\cfrac{瓦斯營收(月)}{單價(TWD/M^3)} = 月使用量(M^3)$$')
     ''
-    st.subheader('測站月資料 台北、天母、士林、信義、松山、平等、社子')
+    st.subheader('測站月資料 臺北(466920)、天母(C0A9C0)、士林(C0A9E0)、信義(C0AC70)、松山(C0AH70)、平等(C0AH40)、社子(C0A980)')
     '##### 需要欄位 year(年) month(月) TX(平均溫度) RH(平均相對溼度) WD01(平均風速)'
-    #st.dataframe(df_sta_data)
+    staNO_opt = st.selectbox('測站資料',('臺北 466920','天母 C0A9C0','士林 C0A9E0','信義 C0AC70','松山 C0AH70','平等 C0AH40','社子 C0A980'))
+    if staNO_opt=='臺北 466920':
+        ld.load_csv_file("466920")
+    elif staNO_opt=='天母 C0A9C0':
+        ld.load_csv_file("C0A9C0")
+    elif staNO_opt=='士林 C0A9E0':
+        ld.load_csv_file("C0A9E0")
+    elif staNO_opt=='信義 C0AC70':
+        ld.load_csv_file("C0AC70")
+    elif staNO_opt=='松山 C0AH70':
+        ld.load_csv_file("C0AH70")
+    elif staNO_opt=='平等 C0AH40':
+        ld.load_csv_file("C0AH40")
+    else:
+        ld.load_csv_file("C0A980")
     '#### 利用需要的欄位算出體感溫度'
     st.markdown('$$體感溫度(RT) = 1.04*T+0.2*e-0.65*V-2.7$$')
     st.markdown('$$e:\cfrac{RH}{100}*6.105*exp\cfrac{17.27*T}{237.7+T}(水氣壓 單位 hpa)$$')
@@ -79,7 +95,9 @@ elif sidebar=='資料集和資料視覺化':
     #歷年月份總使用量
     ''
     st.subheader('歷年月份與總使用量長條圖')
-    month_option=st.selectbox('月份',('1','2','3','4','5','6','7','8','9','10','11','12'))
+    month_option=st.selectbox('月份',
+    ('1','2','3','4','5','6','7','8','9','10','11','12')
+    )
     if month_option=='1':
         month=1
         plt_data.plt_Consumption_month_bar(month)
@@ -144,10 +162,22 @@ elif sidebar=='機器學習':
     st.subheader("機器學習 線性回歸(Linear Resgression)")
     '#### X:平均溫度 Y:使用量 算出溫度與使用量的最佳方程式'
     ml_model.TXmean_and_gas_ml()
+    v_tx = st.number_input('輸入想要推估的溫度(℃)')
+    v_gas_tx = (-482543.05525943)*v_tx + 29876717.97914793
+    vgstx_max = np.round((v_gas_tx+1191714.848))
+    vgstx_min = np.round((v_gas_tx-1191714.848))
+    st.markdown('#### 當月溫度為'+str(v_tx)+'℃時，推估月使用量為'+str(vgstx_min)+'~'+str(vgstx_max)+"(M^3)")
+    ''
     '#### X:平均體感溫度 Y:使用量 算出體感溫度與使用量的最佳方程式'
     ml_model.RTmean_and_gas_ml()
+    v_rt = st.number_input('輸入想要推估的體感溫度(℃)')
+    v_gas_rt = (-365896.70973523)*v_tx + 27760988.330900572
+    vgsrt_max= np.round((v_gas_rt+1201216.551))
+    vgsrt_min= np.round((v_gas_rt-1201216.551))
+    st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，推估月使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(M^3)")
+    ''
     '#### 體感溫度/溫度 與 使用量 分佈圖疊合'
-    #RtTx_and_gas_ml()
+    ml_model.RtTx_and_gas_ml()
 
 
 

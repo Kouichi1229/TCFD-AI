@@ -122,8 +122,8 @@ def RtTx_and_gas_ml():
     X_test1 = np.array(x_test1)
     X_test1 = X_test1.reshape(-1,1)
 
-    txmean_fit = lm.fit(X_train, y_train)
-    rxmean_fit = lm.fit(X_train1, y_train1)
+    #txmean_fit = lm.fit(X_train, y_train)
+    #rxmean_fit = lm.fit(X_train1, y_train1)
     
     Y_train = lm.predict(X_train)
     Y_train1 = lm.predict(X_train1)
