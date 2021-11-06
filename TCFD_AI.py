@@ -158,7 +158,7 @@ elif sidebar=='資料集和資料視覺化':
     plt_data.print_RTmeantoTXmean()
     ''
     st.subheader('相關係數')
-    '##### 使用量與 溫度 體感溫度 風速 濕度 的相關係數'
+    '##### 使用量與**溫度 體感溫度 風速 濕度**的相關係數'
     plt_data.plot_data_figure_heatmap()
     ld.print_data_corr()
     
@@ -190,8 +190,10 @@ elif sidebar=='機器學習':
     vgsrt_min= np.round((v_gas_rt-1201216.551))
     st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，推估月使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(M^3)")
     ''
-    '#### 體感溫度/溫度 與 使用量 分佈圖疊合'
-    ml_model.RtTx_and_gas_ml()
+    '### 結論: 最後我們選擇了**溫度**作為最後的使用量預測參數，因為TCCIP未來的沒有體感溫度的資料'
+    
+    #### 體感溫度/溫度 與 使用量 分佈圖疊合'
+    #ml_model.RtTx_and_gas_ml()
 
 
 
