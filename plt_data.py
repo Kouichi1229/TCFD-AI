@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd 
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 #讀入資料
 load='file_csv/'
@@ -156,3 +157,17 @@ def draw_tempure(month):
     legend=ax.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)
+
+def plot_data_figure_heatmap():
+    df=all_df
+    corr_data_set = ['Consumption(m^3)','RH-mean','TX-mean','WD-mean','RT-mean']
+    fig = plt.figure()
+    sns.heatmap(df[corr_data_set].corr(),annot=True,cmap='Blues')
+    st.pyplot(fig)
+
+def plot_data_figure_pairplot():
+    df=all_df
+    corr_data_set = ['Consumption(m^3)','RH-mean','TX-mean','WD-mean','RT-mean']
+    fig = plt.figure()
+    sns.pairplot(df[corr_data_set],hue='species')
+    st.pyplot(fig)
