@@ -162,13 +162,13 @@ elif sidebar=='資料集和資料視覺化':
     plt_data.plot_data_figure_heatmap()
     ld.print_data_corr()
     
-    """ figure_plot = st.radio(
-     "圖示",
-     ('heatmap', 'pairplot'))
-    if figure_plot =='heatmap':
-        plt_data.plot_data_figure_heatmap()
-    else:
-        plt_data.plot_data_figure_pairplot() """
+    #figure_plot = st.radio(
+    # "圖示",
+    # ('heatmap', 'pairplot'))
+    #if figure_plot =='heatmap':
+    #    plt_data.plot_data_figure_heatmap()
+    #else:
+    #    plt_data.plot_data_figure_pairplot() 
 
     '➤從相關係數發現 溫度 與 體感溫度 有高度的負相關，所以決定使用溫度與體感溫度來做機器學習與訓練'
 
