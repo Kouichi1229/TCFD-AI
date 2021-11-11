@@ -68,7 +68,7 @@ elif sidebar=='資料集和資料視覺化':
     ''
     st.subheader('大台北每年用戶人數')
     st.dataframe(df_subscriber)
-    plt_data.plt_subscriber()
+    #plt_data.plt_subscriber()
     st.markdown('$$\cfrac{月總使用量(M^3)}{用戶人數} = 每戶月使用量(M^3)$$')
     ''
     st.subheader('測站月資料 臺北(466920)、天母(C0A9C0)、士林(C0A9E0)、信義(C0AC70)、松山(C0AH70)、平等(C0AH40)、社子(C0A980)')
