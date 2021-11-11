@@ -12,7 +12,7 @@ lm = LinearRegression()
 
 # Loading data 
 # Data	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
-# Month	RH-mean	TX-mean	WD-mean	RT-mean
+# Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
 #all_df = pd.read_csv('201302 to 2020_all2.csv')
 #sw_df = pd.read_csv('sw_data.csv')
 
@@ -61,7 +61,7 @@ def TXmean_and_gas_ml():
 def RTmean_and_gas_ml():
     
     all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
-    X = all_df['RT-mean']
+    X = all_df['AT-mean']
     y = all_df['Consumption(m^3)']
 
     x_train, x_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state =22) 
@@ -104,7 +104,7 @@ def RtTx_and_gas_ml():
     
     all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
     X1 = all_df['TX-mean']
-    X2 = all_df['RT-mean']
+    X2 = all_df['AT-mean']
     y = all_df['Consumption(m^3)']
 
     x_train, x_test, y_train, y_test = train_test_split(X1, y, test_size = 0.3, random_state =22) 

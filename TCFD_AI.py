@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd 
 import numpy as np
-import matplotlib.pyplot as plt
+
 
 # 自訂函式庫
 import plt_data  
@@ -13,8 +13,8 @@ import load_data as ld
 st.title('AI創新應用競賽-大台北TCFD')
 
 
-# 欄位 : Data	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
-#        Month	RH-mean	TX-mean	WD-mean	RT-mean
+# 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
+#        Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
 # Loading data 
 load='file_csv/'
 
@@ -27,10 +27,11 @@ df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
 df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
 df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
+df_subscriber = pd.read_csv(load +'subscriber_number.csv')
 
-# Show first data 
+
+
 ''
-
 
 
 #選單
@@ -40,6 +41,8 @@ sidebar = st.sidebar.selectbox(
 )
 
 if sidebar=='大台北簡介':
+    #st.subheader('企劃動機與目的')
+    #st.text(txt_plan_movie)
     st.subheader('大台北業務項目 201112~202109 平均比例')
     plt_data.piechart()
     #選擇測站資料
@@ -61,10 +64,16 @@ elif sidebar=='資料集和資料視覺化':
     st.dataframe(df_gass1)
     ''
     st.subheader('將取得的資料作運算取得需要的欄位')
-    st.markdown('$$\cfrac{瓦斯營收(月)}{單價(TWD/M^3)} = 月使用量(M^3)$$')
+    st.markdown('$$\cfrac{瓦斯月營收(TWD)}{月單價(TWD/M^3)} = 月總使用量(M^3)$$')
+    ''
+    st.subheader('大台北每年用戶人數')
+    st.dataframe(df_subscriber)
+    plt_data.plt_subscriber()
+    st.markdown('$$\cfrac{月總使用量(M^3)}{用戶人數} = 每戶月使用量(M^3)$$')
     ''
     st.subheader('測站月資料 臺北(466920)、天母(C0A9C0)、士林(C0A9E0)、信義(C0AC70)、松山(C0AH70)、平等(C0AH40)、社子(C0A980)')
     '##### 需要欄位 year(年) month(月) TX(平均溫度) RH(平均相對溼度) WD01(平均風速)'
+    ''
     staNO_opt = st.selectbox('測站資料',('臺北 466920','天母 C0A9C0','士林 C0A9E0','信義 C0AC70','松山 C0AH70','平等 C0AH40','社子 C0A980'))
     if staNO_opt=='臺北 466920':
         ld.load_csv_file("466920")
@@ -81,7 +90,7 @@ elif sidebar=='資料集和資料視覺化':
     else:
         ld.load_csv_file("C0A980")
     '#### 利用需要的欄位算出體感溫度'
-    st.markdown('$$體感溫度(RT) = 1.04*T+0.2*e-0.65*V-2.7$$')
+    st.markdown('$$體感溫度(AT) = 1.04*T+0.2*e-0.65*V-2.7$$')
     st.markdown('$$e:\cfrac{RH}{100}*6.105*exp\cfrac{17.27*T}{237.7+T}(水氣壓 單位 hpa)$$')
     '###### ➣ T(氣溫 ℃)、e(水氣壓 hpa)、V(風速 m/sec)、RH(相對溼度 %)'
     '##### 將七站所有資料取平均值與營收資料做結合'
@@ -138,8 +147,44 @@ elif sidebar=='資料集和資料視覺化':
 
 
     ''
-    '#### 201302~2020 個月使用量'
+    '#### 201302~2020 各月使用量'
     plt_data.print_everyyear_gas()
+    ''
+    year_option = st.selectbox('年',
+    ('2013','2014','2015','2016','2017','2018','2019','2020')
+    )
+    if year_option=='2013':
+        year ='2013'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2014':
+        year ='2014'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2015':
+        year ='2015'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2016':
+        year ='2016'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2017':
+        year ='2017'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2018':
+        year ='2018'
+        plt_data.print_choice_year_gas(year)   
+    elif  year_option=='2019':
+        year ='2019'
+        plt_data.print_choice_year_gas(year)   
+    else :
+        year ='2020'
+        plt_data.print_choice_year_gas(year)   
+    
+
+
+
+
+
+
+
     '##### ➤ 很明顯的在 6 7 8 9 月(夏季) 瓦斯使用量偏低，在 12 1 2 3 月(冬季)時偏高'
     ''
     st.subheader('歷年與月平均溫度')
@@ -159,16 +204,11 @@ elif sidebar=='資料集和資料視覺化':
     ''
     st.subheader('相關係數')
     '##### 使用量與**溫度 體感溫度 風速 濕度**的相關係數'
-    plt_data.plot_data_figure_heatmap()
     ld.print_data_corr()
+    if st.button('熱圖'):
+        plt_data.plot_data_figure_heatmap()
     
-    #figure_plot = st.radio(
-    # "圖示",
-    # ('heatmap', 'pairplot'))
-    #if figure_plot =='heatmap':
-    #    plt_data.plot_data_figure_heatmap()
-    #else:
-    #    plt_data.plot_data_figure_pairplot() 
+
 
     '➤從相關係數發現 溫度 與 體感溫度 有高度的負相關，所以決定使用溫度與體感溫度來做機器學習與訓練'
 
@@ -178,19 +218,23 @@ elif sidebar=='機器學習':
     ml_model.TXmean_and_gas_ml()
     v_tx = st.number_input('輸入想要推估的溫度(℃)')
     v_gas_tx = (-482543.05525943)*v_tx + 29876717.97914793
-    vgstx_max = np.round((v_gas_tx+1191714.848))
-    vgstx_min = np.round((v_gas_tx-1191714.848))
-    st.markdown('#### 當月溫度為'+str(v_tx)+'℃時，推估月使用量為'+str(vgstx_min)+'~'+str(vgstx_max)+"(M^3)")
+    vgstx_max = np.round((v_gas_tx+1191714.848)/1000000,3)
+    vgstx_min = np.round((v_gas_tx-1191714.848)/1000000,3)
+    if st.button('溫度推估使用量'):
+        st.markdown('#### 當月溫度為'+str(v_tx)+'℃時，')
+        st.markdown('#### 推估月總使用量為'+str(vgstx_min)+'~'+str(vgstx_max)+"(單位:百萬立方公尺)")
     ''
     '#### X:平均體感溫度 Y:使用量 算出體感溫度與使用量的最佳方程式'
     ml_model.RTmean_and_gas_ml()
     v_rt = st.number_input('輸入想要推估的體感溫度(℃)')
     v_gas_rt = (-365896.70973523)*v_tx + 27760988.330900572
-    vgsrt_max= np.round((v_gas_rt+1201216.551))
-    vgsrt_min= np.round((v_gas_rt-1201216.551))
-    st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，推估月使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(M^3)")
+    vgsrt_max= np.round((v_gas_rt+1201216.551)/1000000,3)
+    vgsrt_min= np.round((v_gas_rt-1201216.551)/1000000,3)
+    if st.button('體感溫度推估使用量'):
+        st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，')
+        st.markdown('#### 推估月總使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(單位:百萬立方公尺)")
     ''
-    '### 結論: 最後我們選擇了**溫度**作為最後的使用量預測參數，因為TCCIP未來的沒有體感溫度的資料'
+    '▶ 選擇了**溫度**作為最後的使用量預測參數，因為TCCIP沒有體感溫度未來的資料'
     
     #### 體感溫度/溫度 與 使用量 分佈圖疊合'
     #ml_model.RtTx_and_gas_ml()
