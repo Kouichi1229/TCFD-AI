@@ -148,7 +148,7 @@ elif sidebar=='資料集和資料視覺化':
 
     ''
     select_plot_consumption = st.radio(
-     "選擇想顯示的圖片",
+     "選擇想視覺化的參數",
      ('各月總使用量', '各月單用戶使用量'))
 
     if select_plot_consumption == '各月總使用量':
@@ -215,12 +215,6 @@ elif sidebar=='資料集和資料視覺化':
             year ='2020'
             plt_data.print_choice_year_gas_oneoffamily(year)   
   
-
-
-
-
-
-
 
     '##### ➤ 很明顯的在 6 7 8 9 月(夏季) 瓦斯使用量偏低，在 12 1 2 3 月(冬季)時偏高'
     ''
