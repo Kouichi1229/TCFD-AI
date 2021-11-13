@@ -12,8 +12,17 @@ df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
 df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
 df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
+df_pPCR26 =pd.read_csv(load +'RCP2_6predict.csv')
+df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
+df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
+df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
+df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
 df_subscriber = pd.read_csv(load +'subscriber_number.csv')
 
+
+
+# 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
+#        Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
 
 
 #圓餅圖
@@ -30,7 +39,6 @@ def piechart():
     legend = ax1.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(fig1)
-
 
 # 201302~2020 月份與使用量折線圖
 def print_everyyear_gas():
@@ -51,6 +59,28 @@ def print_everyyear_gas():
     legend = ax.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)
+
+# 201302~2020 月份與單戶使用量折線圖
+def print_everyyear_consumptionforoneoffamily():
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(10,4))
+    ax.plot(all_df['Month'][:11], all_df['Consumption for one of family(m^3)'][:11], label='2013')
+    for i in range(11,len(all_df['Month'])+1,12):
+        if i < len(all_df['Month']):
+            year = 2014 + (i//12)
+            ax.plot( all_df['Month'][i:i+12], all_df['Consumption for one of family(m^3)'][i:i+12], label=str(year))
+
+    ax.set_xlabel('Month')
+    ax.set_ylabel('Make use of gas /one of family(m^3)')
+    
+    ax.yaxis.set_tick_params(length=0)
+    ax.xaxis.set_tick_params(length=0)
+    ax.grid(b=True, which='major', c='w', lw=2, ls='-')
+    legend = ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+
 
 # 201302~2020 月份與使用量折線圖  單選項
 def print_choice_year_gas(year):
@@ -74,7 +104,30 @@ def print_choice_year_gas(year):
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)
 
-def plt_subscriber():
+# 201302~2020 月份與單用戶使用量折線圖  單選項
+def print_choice_year_gas_oneoffamily(year):
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(10,4))
+
+    if year =='2013':
+        ax.plot(all_df['Month'][:11], all_df['Consumption for one of family(m^3)'][:11], 'y', label='2013')
+    else:
+        all_df.index = all_df['Date']
+        df_year = all_df.filter(like=str(year),axis=0)
+        ax.plot(df_year['Month'],df_year['Consumption for one of family(m^3)'], 'y', label= str(year))
+
+    ax.set_xlabel('Month')
+    ax.set_ylabel('Make use of gas/one of family(m^3)')
+    
+    ax.yaxis.set_tick_params(length=0)
+    ax.xaxis.set_tick_params(length=0)
+    ax.grid(b=True, which='major', c='w', lw=2, ls='-')
+    legend = ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+
+
     plot_area = st.empty()
     f, ax = plt.subplots(1,1,figsize=(8,5))
     ax.plot(df_subscriber['年份'],df_subscriber['用戶數量'],'g')
@@ -201,9 +254,3 @@ def plot_data_figure_heatmap():
     sns.heatmap(df[corr_data_set].corr(),annot=True,cmap='Blues')
     st.pyplot(fig)
 
-def plot_data_figure_pairplot():
-    df=all_df
-    corr_data_set = ['Consumption(m^3)','RH-mean','TX-mean','WD-mean','AT-mean']
-    fig = plt.figure()
-    sns.pairplot(df[corr_data_set],hue='species')
-    st.pyplot(fig)

@@ -7,8 +7,7 @@ import numpy as np
 import plt_data  
 import ml_model
 import load_data as ld
-
-
+import txt
 #App name
 st.title('AI創新應用競賽-大台北TCFD')
 
@@ -28,6 +27,11 @@ df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
 df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
 df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
 df_subscriber = pd.read_csv(load +'subscriber_number.csv')
+df_pPCR26 =pd.read_csv(load +'RCP2_6predict.csv')
+df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
+df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
+df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
+df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
 
 
 
@@ -41,8 +45,7 @@ sidebar = st.sidebar.selectbox(
 )
 
 if sidebar=='大台北簡介':
-    #st.subheader('企劃動機與目的')
-    #st.text(txt_plan_movie)
+    #txt.print_movition()
     st.subheader('大台北業務項目 201112~202109 平均比例')
     plt_data.piechart()
     #選擇測站資料
@@ -68,7 +71,6 @@ elif sidebar=='資料集和資料視覺化':
     ''
     st.subheader('大台北每年用戶人數')
     st.dataframe(df_subscriber)
-    #plt_data.plt_subscriber()
     st.markdown('$$\cfrac{月總使用量(M^3)}{用戶人數} = 每戶月使用量(M^3)$$')
     ''
     st.subheader('測站月資料 臺北(466920)、天母(C0A9C0)、士林(C0A9E0)、信義(C0AC70)、松山(C0AH70)、平等(C0AH40)、社子(C0A980)')
@@ -144,40 +146,75 @@ elif sidebar=='資料集和資料視覺化':
         month=12
         plt_data.plt_Consumption_month_bar(month)
 
-
-
     ''
-    '#### 201302~2020 各月使用量'
-    plt_data.print_everyyear_gas()
-    ''
-    year_option = st.selectbox('年',
-    ('2013','2014','2015','2016','2017','2018','2019','2020')
-    )
-    if year_option=='2013':
-        year ='2013'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2014':
-        year ='2014'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2015':
-        year ='2015'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2016':
-        year ='2016'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2017':
-        year ='2017'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2018':
-        year ='2018'
-        plt_data.print_choice_year_gas(year)   
-    elif  year_option=='2019':
-        year ='2019'
-        plt_data.print_choice_year_gas(year)   
-    else :
-        year ='2020'
-        plt_data.print_choice_year_gas(year)   
+    select_plot_consumption = st.radio(
+     "選擇想顯示的圖片",
+     ('各月總使用量', '各月單用戶使用量'))
+
+    if select_plot_consumption == '各月總使用量':
+        '#### 201302~2020 各月使用量'
+        plt_data.print_everyyear_gas()
+        ''
+        year_option = st.selectbox('年',
+        ('2013','2014','2015','2016','2017','2018','2019','2020')
+        )
+        if year_option=='2013':
+            year ='2013'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2014':
+            year ='2014'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2015':
+            year ='2015'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2016':
+            year ='2016'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2017':
+            year ='2017'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2018':
+            year ='2018'
+            plt_data.print_choice_year_gas(year)   
+        elif  year_option=='2019':
+            year ='2019'
+            plt_data.print_choice_year_gas(year)   
+        else :
+            year ='2020'
+            plt_data.print_choice_year_gas(year)   
     
+    
+    else: #radio else
+        plt_data.print_everyyear_consumptionforoneoffamily()
+
+        year_option = st.selectbox('年',
+            ('2013','2014','2015','2016','2017','2018','2019','2020')
+        )
+        if year_option=='2013':
+            year ='2013'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2014':
+            year ='2014'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2015':
+            year ='2015'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2016':
+            year ='2016'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2017':
+            year ='2017'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2018':
+            year ='2018'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        elif  year_option=='2019':
+            year ='2019'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+        else :
+            year ='2020'
+            plt_data.print_choice_year_gas_oneoffamily(year)   
+  
 
 
 
@@ -214,25 +251,66 @@ elif sidebar=='資料集和資料視覺化':
 
 elif sidebar=='機器學習':
     st.subheader("機器學習 線性回歸(Linear Resgression)")
-    '#### X:平均溫度 Y:使用量 算出溫度與使用量的最佳方程式'
-    ml_model.TXmean_and_gas_ml()
-    v_tx = st.number_input('輸入想要推估的溫度(℃)')
-    v_gas_tx = (-482543.05525943)*v_tx + 29876717.97914793
-    vgstx_max = np.round((v_gas_tx+1191714.848)/1000000,3)
-    vgstx_min = np.round((v_gas_tx-1191714.848)/1000000,3)
-    if st.button('溫度推估使用量'):
-        st.markdown('#### 當月溫度為'+str(v_tx)+'℃時，')
-        st.markdown('#### 推估月總使用量為'+str(vgstx_min)+'~'+str(vgstx_max)+"(單位:百萬立方公尺)")
-    ''
-    '#### X:平均體感溫度 Y:使用量 算出體感溫度與使用量的最佳方程式'
-    ml_model.RTmean_and_gas_ml()
-    v_rt = st.number_input('輸入想要推估的體感溫度(℃)')
-    v_gas_rt = (-365896.70973523)*v_tx + 27760988.330900572
-    vgsrt_max= np.round((v_gas_rt+1201216.551)/1000000,3)
-    vgsrt_min= np.round((v_gas_rt-1201216.551)/1000000,3)
-    if st.button('體感溫度推估使用量'):
-        st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，')
-        st.markdown('#### 推估月總使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(單位:百萬立方公尺)")
+    '#### 總使用量與溫度機器學習'
+    choice_ML_predict = st.radio("平均溫度與體感溫度機器學習",
+        ("月平均溫度","月平均體感溫度")
+    )
+
+    if choice_ML_predict=="月平均溫度":
+        '##### X:平均溫度 Y:使用量 算出溫度與使用量的最佳方程式'
+        ml_model.TXmean_and_gas_ml()
+        v_tx = st.number_input('輸入想要推估的溫度(℃)')
+        v_gas_tx = (-482543.05525943)*v_tx + 29876717.97914793
+        vgstx_max = np.round((v_gas_tx+1191714.848)/1000000,3)
+        vgstx_min = np.round((v_gas_tx-1191714.848)/1000000,3)
+        if st.button('溫度推估使用量'):
+            st.markdown('#### 當月溫度為'+str(v_tx)+'℃時，')
+            st.markdown('#### 推估月總使用量為'+str(vgstx_min)+'~'+str(vgstx_max)+"(單位:百萬立方公尺)")
+
+
+    else:
+        '##### X:平均體感溫度 Y:使用量 算出體感溫度與使用量的最佳方程式'
+        ml_model.RTmean_and_gas_ml()
+        v_rt = st.number_input('輸入想要推估的體感溫度(℃)')
+        v_gas_rt = (-365896.70973523)*v_rt + 27760988.330900572
+        vgsrt_max= np.round((v_gas_rt+1201216.551)/1000000,3)
+        vgsrt_min= np.round((v_gas_rt-1201216.551)/1000000,3)
+        if st.button('體感溫度推估使用量'):
+            st.markdown('#### 當月體感溫度為'+str(v_rt)+'℃時，')
+            st.markdown('#### 推估月總使用量為'+str(vgsrt_min)+'~'+str(vgsrt_max)+"(單位:百萬立方公尺)")
+
+    '#### 單一用戶與溫度機器學習'
+    choice_ML_predict_onefamily = st.radio("單戶溫度與體感機器學習",
+        ("月平均溫度","月平均體感溫度")
+    )
+
+    if choice_ML_predict_onefamily=="月平均溫度":
+        '##### X:平均溫度 Y:使用量 算出溫度與使用量的最佳方程式'
+        ml_model.ML_consumptionforoneoffamily_tx()
+        #y = [-1.2349557]x + 76.72030411467331
+
+        p_tx_one = st.number_input('輸入想要推估的溫度(℃)/單戶')
+        p_gas_tx_one = (-1.2349557)*p_tx_one + 76.72030411467331
+        pgstx_max = np.round((p_gas_tx_one+3.032),3)
+        pgstx_min = np.round((p_gas_tx_one-3.032),3)
+        if st.button('溫度推估單戶使用量'):
+            st.markdown('#### 當月溫度為'+str(p_tx_one)+'℃時，')
+            st.markdown('#### 推估月總使用量為'+str(pgstx_min)+'~'+str(pgstx_max)+"(單位:立方公尺)")
+
+
+    else:
+        '##### X:平均體感溫度 Y:使用量 算出體感溫度與使用量的最佳方程式'
+        ml_model.ML_consumptionforoneoffamily_rt()
+        #y = [-0.9359161]x + 71.2923200049654
+
+        p_rt_one = st.number_input('輸入想要推估的體感溫度(℃)/單戶')
+        p_gas_rt_one = (-0.9359161)*p_rt_one + 71.2923200049654
+        pgsrt_max= np.round((p_gas_rt_one+3.078),3)
+        pgsrt_min= np.round((p_gas_rt_one-3.078),3)
+        if st.button('體感溫度推估單戶使用量'):
+            st.markdown('#### 當月體感溫度為'+str(p_rt_one)+'℃時，')
+            st.markdown('#### 推估月總使用量為'+str(pgsrt_min)+'~'+str(pgsrt_max)+"(單位:百萬立方公尺)")
+
     ''
     '▶ 選擇了**溫度**作為最後的使用量預測參數，因為TCCIP沒有體感溫度未來的資料'
     
@@ -242,7 +320,7 @@ elif sidebar=='機器學習':
 
 
 elif sidebar=='未來影響':
-    st.subheader('在RCP各情境的影響下')
+    st.subheader('在IPSL_CM5A_LR模組的環境下，RCP各情境的影響')
     selectbox_RCP = st.selectbox(
     "RCP",
     ("None", "RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
