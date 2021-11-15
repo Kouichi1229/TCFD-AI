@@ -128,18 +128,6 @@ def print_choice_year_gas_oneoffamily(year):
 
 
 
-    plot_area = st.empty()
-    f, ax = plt.subplots(1,1,figsize=(8,5))
-    ax.plot(df_subscriber['年份'],df_subscriber['用戶數量'],'g')
-
-    ax.set_xlabel('Year')
-    ax.set_ylabel('subscriber')
-
-    legend=ax.legend()
-    legend.get_frame().set_alpha(0.5)
-    plot_area.pyplot(f)
-
-
 #畫出溫度和使用量分布圖
 def print_TXmean_and_gas():
     plot_area = st.empty()
@@ -227,7 +215,18 @@ def plt_Consumption_month_bar(month):
     f, ax = plt.subplots(1,1,figsize=(8,5))
     x=df['Date']
     y=df['Consumption(m^3)']
-    ax.bar(x,y)
+    ax.bar(x, y, color="orange")
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+#不同年份 同月單戶使用量長條圖
+def plt_oneoffamily_month_bar(month):
+    df = all_df[all_df['Month']==month]
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    x=df['Date']
+    y=df['Consumption for one of family(m^3)']
+    ax.bar(x ,y, color="yellow")
     legend=ax.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)

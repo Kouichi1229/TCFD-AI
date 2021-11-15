@@ -105,46 +105,85 @@ elif sidebar=='資料集和資料視覺化':
     st.subheader('資料圖視化')
     #歷年月份總使用量
     ''
-    st.subheader('歷年月份與總使用量長條圖')
+    st.subheader('歷年月份與使用量長條圖')
+    rbt_consumption = st.radio(
+    '長條圖顯示',('總累積使用量','單戶使用量')
+    )
     month_option=st.selectbox('月份',
     ('1','2','3','4','5','6','7','8','9','10','11','12')
     )
     if month_option=='1':
         month=1
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='2':
         month=2
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='3':
         month=3
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='4':
         month=4
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='5':
         month=5
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='6':
         month=6
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='7':
         month=7
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='8':
         month=8
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='9':
         month=9
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='10':
         month=10
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     elif month_option=='11':
         month=11
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
     else:
         month=12
-        plt_data.plt_Consumption_month_bar(month)
+        if rbt_consumption =='總累積使用量':
+            plt_data.plt_Consumption_month_bar(month)
+        else:
+            plt_data.plt_oneoffamily_month_bar(month)
 
     ''
     select_plot_consumption = st.radio(
@@ -222,16 +261,21 @@ elif sidebar=='資料集和資料視覺化':
     month_v=st.slider("月份",1,12,6)
     plt_data.draw_tempure(month_v)
     ''
-    '#### 溫度與使用量分布圖'
-    plt_data.print_TXmean_and_gas()
+    rbt_plt_scottor=st.radio(
+        "散佈圖-使用量與其他因素關係",("平均溫度","平均體感溫度","兩圖重和")
+    )
+    if rbt_plt_scottor == "平均溫度":
+        '#### 溫度與使用量分布圖'
+        plt_data.print_TXmean_and_gas()
+    elif rbt_plt_scottor =="平均體感溫度":
+        '#### 體感溫度與使用量分布圖'
+        plt_data.print_RTmean_and_gas()
+    else:
+        '#### 體感溫度&溫度疊合'
+        plt_data.print_RTmeantoTXmean()
+    
+    
     '##### ➤當溫度越高時，使用量明顯變低'
-
-    ''
-    '#### 體感溫度與使用量分布圖'
-    plt_data.print_RTmean_and_gas()
-    ''
-    '#### 體感溫度&溫度疊合'
-    plt_data.print_RTmeantoTXmean()
     ''
     st.subheader('相關係數')
     '##### 使用量與**溫度 體感溫度 風速 濕度**的相關係數'
