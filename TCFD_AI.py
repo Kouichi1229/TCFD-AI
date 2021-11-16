@@ -382,3 +382,31 @@ elif sidebar=='未來影響':
         dfload=df_PCR85
         N="RCP8.5"
         plt_data.draw_pcr(dfload,N)
+
+    RCP_choice = st.radio('選擇RCP情境',("RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
+    predict_year = st.slider('比較年分',2021,2099)
+
+
+    month_select = st.selectbox(
+        '月份',('1','2','3','4','5','6','7','8','9','10','11','12')
+    )
+
+    #count_reduce_infuture(month,pcrFile,p_year,RCP)
+    if RCP_choice =="RCP2.6":
+        dfload=df_pPCR26
+        N="RCP2.6"
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+    elif RCP_choice =="RCP4.5":
+        dfload=df_pPCR45
+        N="RCP4.5"
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+    elif RCP_choice =="RCP6.0":
+        dfload=df_pPCR60
+        N="RCP6.0"
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+    else:
+        dfload=df_pPCR85
+        N="RCP8.5" 
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+    
+    

@@ -1,4 +1,15 @@
+from numpy import loads
 import streamlit as st
+import pandas as pd
+import numpy as np
+
+load='file_csv/'
+#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\standard_Consumption .csv
+#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\RCP2_6predict.csv
+df_standard = pd.read_csv(load+'standard_Consumption .csv')
+
+
+
 
 def print_movition():
     
@@ -14,3 +25,25 @@ def print_movition():
     的期待。
      ''')
     st.write(txt)
+
+
+#p_consumption=predict_dt[predict_dt['Date']==203401]['consumption']
+#計算與標準差了多少
+def count_reduce_infuture(month,pcrFile,p_year,RCP):
+    standard = df_standard[df_standard['Month']==int(month)]['Consumption-mean']
+    standard = pd.to_numeric(standard, errors='coerce')
+    standard = float(standard)/1000000
+    if int(month) < 10:
+        month= '0'+str(month)
+    else:
+        month=str(month)
+    p_data = str(p_year) + str(month)
+    main_dt = pcrFile[pcrFile["Date"]==int(p_data)]['consumption']
+    main_dt = pd.to_numeric(main_dt, errors='coerce')
+    main_dt = float(main_dt)/1000000
+    result = np.round(abs(main_dt-standard),3)
+    #Revenue
+
+    st.markdown('當在'+RCP+'的情境下,在'+str(p_year)+'年'+str(month)+'月時,跟過去'+str(month)+'月的平均使用量相比')
+    st.markdown('減少了{:.2%}的使用量'.format(result)+'(百萬立方公尺)')
+    #st.markdown('')
