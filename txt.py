@@ -41,7 +41,7 @@ def count_reduce_infuture(month,pcrFile,p_year,RCP):
     main_dt = pcrFile[pcrFile["Date"]==int(p_data)]['consumption']
     main_dt = pd.to_numeric(main_dt, errors='coerce')
     main_dt = float(main_dt)/1000000
-    result = np.round(abs(main_dt-standard),3)
+    result = np.round(abs((main_dt-standard)/standard),3)
     #Revenue
 
     st.markdown('當在'+RCP+'的情境下,在'+str(p_year)+'年'+str(month)+'月時,跟過去'+str(month)+'月的平均使用量相比')

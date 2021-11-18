@@ -333,7 +333,7 @@ elif sidebar=='機器學習':
         pgstx_min = np.round((p_gas_tx_one-3.032),3)
         if st.button('溫度推估單戶使用量'):
             st.markdown('#### 當月溫度為'+str(p_tx_one)+'℃時，')
-            st.markdown('#### 推估月總使用量為'+str(pgstx_min)+'~'+str(pgstx_max)+"(單位:立方公尺)")
+            st.markdown('#### 推估月單戶使用量為'+str(pgstx_min)+'~'+str(pgstx_max)+"(單位:立方公尺)")
 
 
     else:
@@ -347,7 +347,7 @@ elif sidebar=='機器學習':
         pgsrt_min= np.round((p_gas_rt_one-3.078),3)
         if st.button('體感溫度推估單戶使用量'):
             st.markdown('#### 當月體感溫度為'+str(p_rt_one)+'℃時，')
-            st.markdown('#### 推估月總使用量為'+str(pgsrt_min)+'~'+str(pgsrt_max)+"(單位:百萬立方公尺)")
+            st.markdown('#### 推估月單戶使用量為'+str(pgsrt_min)+'~'+str(pgsrt_max)+"(單位:百萬立方公尺)")
 
     ''
     '▶ 選擇了**溫度**作為最後的使用量預測參數，因為TCCIP沒有體感溫度未來的資料'
