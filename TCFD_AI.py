@@ -32,7 +32,10 @@ df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
 df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
 df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
 df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
-
+df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
+df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
+df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
+df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
 
 
 ''
@@ -359,29 +362,57 @@ elif sidebar=='機器學習':
 
 elif sidebar=='未來影響':
     st.subheader('在IPSL_CM5A_LR模組的環境下，RCP各情境的影響')
+    # 選項
+    select_plot_consumption_RCP = st.radio(
+     "選擇使用量呈現",
+     ('年總使用量', '年單戶使用量'))    
     selectbox_RCP = st.selectbox(
     "RCP",
     ("None", "RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
+    
     if selectbox_RCP=='None':
         st.subheader('總覽')
-        #st.image('pic/ALL RCP figure.png', caption='ALL RCP figure')
-        plt_data.draw_all_pcr()
+        if select_plot_consumption_RCP=='年總使用量':        
+            plt_data.draw_all_pcr()
+        else:
+            plt_data.draw_all_pcr_oneodfamily()
     elif selectbox_RCP=='RCP2.6':
-        dfload=df_PCR26
+        st.subheader('RCP2.6')
         N="RCP2.6"
-        plt_data.draw_pcr(dfload,N)
+        if select_plot_consumption_RCP=='年總使用量':
+            dfload=df_PCR26        
+            plt_data.draw_pcr(dfload,N)
+        else:
+            dfload=df_PCR26_oneoffamily
+            plt_data.draw_pcr_oneodfamily(dfload,N)
+        
     elif selectbox_RCP=='RCP4.5':
-        dfload=df_PCR45
+        st.subheader('RCP4.5')
         N="RCP4.5"
-        plt_data.draw_pcr(dfload,N)
+        if select_plot_consumption_RCP=='年總使用量':
+            dfload=df_PCR45        
+            plt_data.draw_pcr(dfload,N)
+        else:
+            dfload=df_PCR45_oneoffamily
+            plt_data.draw_pcr_oneodfamily(dfload,N)
     elif selectbox_RCP=='RCP6.0':
-        dfload=df_PCR60
+        st.subheader('RCP6.0')
         N="RCP6.0"
-        plt_data.draw_pcr(dfload,N)
+        if select_plot_consumption_RCP=='年總使用量':
+            dfload=df_PCR60        
+            plt_data.draw_pcr(dfload,N)
+        else:
+            dfload=df_PCR60_oneoffamily
+            plt_data.draw_pcr_oneodfamily(dfload,N)
     else :
-        dfload=df_PCR85
+        st.subheader('RCP8.5')
         N="RCP8.5"
-        plt_data.draw_pcr(dfload,N)
+        if select_plot_consumption_RCP=='年總使用量':
+            dfload=df_PCR85        
+            plt_data.draw_pcr(dfload,N)
+        else:
+            dfload=df_PCR85_oneoffamily
+            plt_data.draw_pcr_oneodfamily(dfload,N)
 
     RCP_choice = st.radio('選擇RCP情境',("RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
     predict_year = st.slider('比較年分',2021,2099)
@@ -391,22 +422,24 @@ elif sidebar=='未來影響':
         '月份',('1','2','3','4','5','6','7','8','9','10','11','12')
     )
 
+    if st.button("顯示計算"):
+
     #count_reduce_infuture(month,pcrFile,p_year,RCP)
-    if RCP_choice =="RCP2.6":
-        dfload=df_pPCR26
-        N="RCP2.6"
-        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
-    elif RCP_choice =="RCP4.5":
-        dfload=df_pPCR45
-        N="RCP4.5"
-        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
-    elif RCP_choice =="RCP6.0":
-        dfload=df_pPCR60
-        N="RCP6.0"
-        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
-    else:
-        dfload=df_pPCR85
-        N="RCP8.5" 
-        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+        if RCP_choice =="RCP2.6":
+            dfload=df_pPCR26
+            N="RCP2.6"
+            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+        elif RCP_choice =="RCP4.5":
+            dfload=df_pPCR45
+            N="RCP4.5"
+            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+        elif RCP_choice =="RCP6.0":
+            dfload=df_pPCR60
+            N="RCP6.0"
+            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+        else:
+            dfload=df_pPCR85
+            N="RCP8.5" 
+            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
     
     

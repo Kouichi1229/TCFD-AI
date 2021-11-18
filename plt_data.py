@@ -18,6 +18,12 @@ df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
 df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
 df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
 df_subscriber = pd.read_csv(load +'subscriber_number.csv')
+bf_dt_oneoffamily = pd.read_csv(load +'2014to2020oneoffamily.csv')
+#RCP2.6_yearoneoffamily.csv
+df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
+df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
+df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
+df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
 
 
 
@@ -207,6 +213,43 @@ def draw_pcr(dfload,N):
     legend=ax.legend()
     legend.get_frame().set_alpha(0.5)
     plot_area.pyplot(f)
+
+#PCR 與單戶使用量圖 全部
+def draw_all_pcr_oneodfamily():
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    ax.plot(bf_dt_oneoffamily['Year'],bf_dt_oneoffamily['Consumption/one of family(year)'],label='before')
+    ax.plot(df_PCR26_oneoffamily['Year'],df_PCR26_oneoffamily['Consumption(year)'],label='RCP2.6')
+    ax.plot(df_PCR45_oneoffamily['Year'],df_PCR45_oneoffamily['Consumption(year)'],label='RCP4.5')
+    ax.plot(df_PCR60_oneoffamily['Year'],df_PCR60_oneoffamily['Consumption(year)'],label='RCP6.0')
+    ax.plot(df_PCR85_oneoffamily['Year'],df_PCR85_oneoffamily['Consumption(year)'],label='RCP8.5')
+
+    ax.set_xlabel('Year')
+    ax.set_ylabel('make use of gas/ one of family(M^3)')
+
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+# 選擇 PCR 單一線條圖  單戶
+def draw_pcr_oneodfamily(dfload,N):
+    plot_area = st.empty()
+    f, ax = plt.subplots(1,1,figsize=(8,5))
+    ax.plot(bf_dt_oneoffamily['Year'],bf_dt_oneoffamily['Consumption/one of family(year)'],label='before')
+    ax.plot(dfload['Year'],dfload['Consumption(year)'],label=N)
+
+    ax.set_xlabel('Year')
+    ax.set_ylabel('make use of gas/ one of family(M^3)')
+
+    legend=ax.legend()
+    legend.get_frame().set_alpha(0.5)
+    plot_area.pyplot(f)
+
+
+
+
+
+
 
 # 不同年份 同月累積使用量長條圖
 def plt_Consumption_month_bar(month):
