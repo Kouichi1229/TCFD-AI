@@ -6,8 +6,9 @@ import numpy as np
 load='file_csv/'
 #C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\standard_Consumption .csv
 #C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\RCP2_6predict.csv
+#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\gross margin standard.csv
 df_standard = pd.read_csv(load+'standard_Consumption .csv')
-
+df_standard_gross_margin = pd.read_csv(load+'gross margin standard.csv')
 
 
 
@@ -33,6 +34,8 @@ def count_reduce_infuture(month,pcrFile,p_year,RCP):
     standard = df_standard[df_standard['Month']==int(month)]['Consumption-mean']
     standard = pd.to_numeric(standard, errors='coerce')
     standard = float(standard)/1000000
+    standard_gross_margin = df_standard_gross_margin[df_standard_gross_margin['Month']==int(month)]['Gross margin']
+    standard_gross_margin = pd.to_numeric(standard_gross_margin, errors='coerce')
     if int(month) < 10:
         month= '0'+str(month)
     else:
@@ -42,8 +45,8 @@ def count_reduce_infuture(month,pcrFile,p_year,RCP):
     main_dt = pd.to_numeric(main_dt, errors='coerce')
     main_dt = float(main_dt)/1000000
     result = np.round(abs((main_dt-standard)/standard),3)
-    #Revenue
+    gossMargin_r = np.round((float(standard_gross_margin)*result)/10000,2)
 
     st.markdown('當在'+RCP+'的情境下,在'+str(p_year)+'年'+str(month)+'月時,跟過去'+str(month)+'月的平均使用量相比')
-    st.markdown('減少了{:.2%}的使用量'.format(result)+'(百萬立方公尺)')
-    #st.markdown('')
+    st.markdown('減少了{:.2%}的使用量'.format(result)+'(單位:百萬立方公尺)')
+    st.markdown('#### 跟2013~2014過去平均營利毛利相比減少了'+str(gossMargin_r)+'萬')
