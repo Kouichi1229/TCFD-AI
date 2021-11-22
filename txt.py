@@ -4,9 +4,7 @@ import pandas as pd
 import numpy as np
 
 load='file_csv/'
-#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\standard_Consumption .csv
-#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\RCP2_6predict.csv
-#C:\Users\user\Desktop\大作業\大台北TCFD整合\file_csv\gross margin standard.csv
+
 df_standard = pd.read_csv(load+'standard_Consumption .csv')
 df_standard_gross_margin = pd.read_csv(load+'gross margin standard.csv')
 

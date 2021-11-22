@@ -1,7 +1,10 @@
 import streamlit as st
-import pandas as pd 
+import pandas as pd
+import numpy as np 
 import matplotlib.pyplot as plt
 import seaborn as sns
+
+
 
 #讀入資料
 load='file_csv/'
@@ -24,7 +27,7 @@ df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
 df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
 df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
 df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
-
+df_swdata=pd.read_csv(load +'sw_data.csv')
 
 
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
@@ -296,3 +299,35 @@ def plot_data_figure_heatmap():
     sns.heatmap(df[corr_data_set].corr(),annot=True,cmap='Blues')
     st.pyplot(fig)
 
+def plot_RH_Relationship_oneoffamily():
+    df_summer =  df_swdata[df_swdata['S(1)/W(0)'] == 1]
+    df_winter =  df_swdata[df_swdata['S(1)/W(0)'] == 0]
+    #summer_fit = np.polyfit(df_summer['RH-mean'], df_summer['Consumption for one of family(m^3)'], 1)
+    #winter_fit = np.polyfit(df_winter['RH-mean'], df_winter['Consumption for one of family(m^3)'], 1)
+    # regression plot using seaborn
+    fig = plt.figure()
+    sns.regplot(x=df_summer['RH-mean'], y=df_summer['Consumption for one of family(m^3)'], color='orange', marker='+')
+    sns.regplot(x=df_winter['RH-mean'], y=df_winter['Consumption for one of family(m^3)'], color='blue', marker='+')
+
+    # Legend, title and labels.
+    
+    plt.legend(labels=['summer', 'winter'])
+    plt.xlabel('RH-mean (%)', size=18)
+    plt.ylabel('Consumption for one of family(m^3)', size=18)
+    st.pyplot(fig);
+
+def plot_RH_Relationship_all():
+    df_summer =  df_swdata[df_swdata['S(1)/W(0)'] == 1]
+    df_winter =  df_swdata[df_swdata['S(1)/W(0)'] == 0]
+    #summer_fit = np.polyfit(df_summer['RH-mean'], df_summer['Consumption for one of family(m^3)'], 1)
+    #winter_fit = np.polyfit(df_winter['RH-mean'], df_winter['Consumption for one of family(m^3)'], 1)
+    # regression plot using seaborn
+    fig = plt.figure()
+    sns.regplot(x=df_summer['RH-mean'], y=df_summer['Consumption(m^3)'], color='orange', marker='+')
+    sns.regplot(x=df_winter['RH-mean'], y=df_winter['Consumption(m^3)'], color='blue', marker='+')
+
+    # Legend, title and labels.
+    plt.legend(labels=['summer', 'winter'])
+    plt.xlabel('RH-mean (%)', size=18)
+    plt.ylabel('Consumption(m^3)', size=18);
+    st.pyplot(fig);

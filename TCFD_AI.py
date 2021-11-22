@@ -9,7 +9,8 @@ import ml_model
 import load_data as ld
 import txt
 #App name
-st.title('AI創新應用競賽-大台北TCFD')
+st.title('2021 AI智慧創新應用競賽 實務組')
+st.header('氣候變遷對大台北公司/產業營運的影響推估')
 
 
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
@@ -280,6 +281,25 @@ elif sidebar=='資料集和資料視覺化':
     
     '##### ➤當溫度越高時，使用量明顯變低'
     ''
+    st.subheader("濕度和使用量關係")
+    rh_rbtn = st.radio('選擇使用量狀態',('總使用量','單戶使用量'))
+    
+    if rh_rbtn == '總使用量':
+        plt_data.plot_RH_Relationship_all()
+    else:
+        plt_data.plot_RH_Relationship_oneoffamily()
+
+    rh_col1,rh_col2 = st.columns(2)
+
+    with rh_col1:
+        '##### 濕度與總使用量'
+        plt_data.plot_RH_Relationship_all()
+    with rh_col2:
+        '##### 濕度與單戶使用量'
+        plt_data.plot_RH_Relationship_oneoffamily()
+
+
+
     st.subheader('相關係數')
     '##### 使用量與**溫度 體感溫度 風速 濕度**的相關係數'
     ld.print_data_corr()
