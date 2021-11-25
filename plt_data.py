@@ -3,7 +3,9 @@ import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from PIL import Image
 
+imge = Image.open(".\pic\圖標.png")
 
 
 #讀入資料
@@ -315,7 +317,7 @@ def plot_RH_Relationship_oneoffamily():
     plt.xlabel('RH-mean (%)', size=18)
     plt.ylabel('Consumption for one of family(m^3)', size=18)
     st.pyplot(fig);
-    st.image('.\pic\圖標.png')
+    st.image(imge)
     #C:\Users\user\Desktop\大作業\大台北TCFD整合\pic\圖標.png
 def plot_RH_Relationship_all():
     df_summer =  df_swdata[df_swdata['S(1)/W(0)'] == 1]
@@ -332,4 +334,4 @@ def plot_RH_Relationship_all():
     plt.xlabel('RH-mean (%)', size=18)
     plt.ylabel('Consumption(m^3)', size=18);
     st.pyplot(fig);
-    st.image('.\pic\圖標.png')
+    st.image(imge)
