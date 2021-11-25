@@ -311,11 +311,12 @@ def plot_RH_Relationship_oneoffamily():
 
     # Legend, title and labels.
     
-    plt.legend(labels=['summer', 'winter'])
+    #plt.legend(labels=['summer', 'winter'])
     plt.xlabel('RH-mean (%)', size=18)
     plt.ylabel('Consumption for one of family(m^3)', size=18)
     st.pyplot(fig);
-
+    st.image('.\pic\圖標.png')
+    #C:\Users\user\Desktop\大作業\大台北TCFD整合\pic\圖標.png
 def plot_RH_Relationship_all():
     df_summer =  df_swdata[df_swdata['S(1)/W(0)'] == 1]
     df_winter =  df_swdata[df_swdata['S(1)/W(0)'] == 0]
@@ -327,7 +328,8 @@ def plot_RH_Relationship_all():
     sns.regplot(x=df_winter['RH-mean'], y=df_winter['Consumption(m^3)'], color='blue', marker='+')
 
     # Legend, title and labels.
-    plt.legend(labels=['summer', 'winter'])
+    #plt.legend(labels=['summer', 'winter'])
     plt.xlabel('RH-mean (%)', size=18)
     plt.ylabel('Consumption(m^3)', size=18);
     st.pyplot(fig);
+    st.image('.\pic\圖標.png')
