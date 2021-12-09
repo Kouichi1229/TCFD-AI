@@ -49,6 +49,9 @@ sidebar = st.sidebar.selectbox(
 )
 
 if sidebar=='大台北簡介':
+    st.subheader('題目發想')
+    st.caption('看看其他同樣天然氣產業的上市櫃營收')
+    st.image('pic\其他瓦斯行業營收呈現.png')
     #txt.print_movition()
     st.subheader('大台北業務項目 201112~202109 平均比例')
     plt_data.piechart()
@@ -298,7 +301,9 @@ elif sidebar=='資料集和資料視覺化':
         '##### 濕度與單戶使用量'
         plt_data.plot_RH_Relationship_oneoffamily()
 
-
+    pic_col1,pic_col2 = st.columns(2)
+    with pic_col1:
+        st.image('pic\圖標.png')
 
     st.subheader('相關係數')
     '##### 使用量與**溫度 體感溫度 風速 濕度**的相關係數'
