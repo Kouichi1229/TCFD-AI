@@ -1,12 +1,12 @@
 from numpy import loads
 import streamlit as st
+from data_loader import load_csv
 import pandas as pd
 import numpy as np
 
-load='file_csv/'
 
-df_standard = pd.read_csv(load+'standard_Consumption .csv')
-df_standard_gross_margin = pd.read_csv(load+'gross margin standard.csv')
+df_standard = load_csv('standard_Consumption .csv')
+df_standard_gross_margin = load_csv('gross margin standard.csv')
 
 
 
