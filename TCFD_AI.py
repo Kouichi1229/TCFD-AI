@@ -16,25 +16,6 @@ st.header('氣候變遷對大台北公司/產業營運的影響推估')
 
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
 #        Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
-# Loading data 
-all_df = load_csv('201302 to 2020_all2.csv')
-detail_df = load_csv('9908_10y_detail.csv')
-df_PCR26 = load_csv('RCP2_6_year.csv')
-df_PCR45 = load_csv('RCP4_5_year.csv')
-df_PCR60 = load_csv('RCP6_0_year.csv')
-df_PCR85 = load_csv('RCP8_5_year.csv')
-df_gass1 = load_csv('gas_sheet_1.csv')
-df_subscriber = load_csv('subscriber_number.csv')
-df_pPCR26 =load_csv('RCP2_6predict.csv')
-df_pPCR45 =load_csv('RCP4_5predict.csv')
-df_pPCR60 =load_csv('RCP6_0predict.csv')
-df_pPCR85 =load_csv('RCP8_5predict.csv')
-df_PCR26_oneoffamily = load_csv('RCP2.6_yearoneoffamily.csv')
-df_PCR45_oneoffamily = load_csv('RCP4.5_yearoneoffamily.csv')
-df_PCR60_oneoffamily = load_csv('RCP6.0_yearoneoffamily.csv')
-df_PCR85_oneoffamily = load_csv('RCP8.5_yearoneoffamily.csv')
-
-
 ''
 
 
@@ -59,6 +40,10 @@ if sidebar=='大台北簡介':
     '##### 選擇台北、天母、士林、信義、松山、平等、社子共７個測站的平均資料做分析'
     ''
 elif sidebar=='資料集和資料視覺化':
+    detail_df = load_csv('9908_10y_detail.csv')
+    df_gass1 = load_csv('gas_sheet_1.csv')
+    df_subscriber = load_csv('subscriber_number.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     st.subheader('取得原始資料')
     '#### 大台北產品營收 資料集(抓取過去瓦斯收入營收資料)'
 
@@ -382,6 +367,14 @@ elif sidebar=='機器學習':
 
 
 elif sidebar=='未來影響':
+    df_PCR26 = load_csv('RCP2_6_year.csv')
+    df_PCR45 = load_csv('RCP4_5_year.csv')
+    df_PCR60 = load_csv('RCP6_0_year.csv')
+    df_PCR85 = load_csv('RCP8_5_year.csv')
+    df_PCR26_oneoffamily = load_csv('RCP2.6_yearoneoffamily.csv')
+    df_PCR45_oneoffamily = load_csv('RCP4.5_yearoneoffamily.csv')
+    df_PCR60_oneoffamily = load_csv('RCP6.0_yearoneoffamily.csv')
+    df_PCR85_oneoffamily = load_csv('RCP8.5_yearoneoffamily.csv')
     st.subheader('在IPSL_CM5A_LR模組的環境下，RCP各情境的影響')
     # 選項
     select_plot_consumption_RCP = st.radio(
@@ -447,20 +440,17 @@ elif sidebar=='未來影響':
 
     #count_reduce_infuture(month,pcrFile,p_year,RCP)
         if RCP_choice =="RCP2.6":
-            dfload=df_pPCR26
+            dfload = load_csv('RCP2_6predict.csv')
             N="RCP2.6"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         elif RCP_choice =="RCP4.5":
-            dfload=df_pPCR45
+            dfload = load_csv('RCP4_5predict.csv')
             N="RCP4.5"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         elif RCP_choice =="RCP6.0":
-            dfload=df_pPCR60
+            dfload = load_csv('RCP6_0predict.csv')
             N="RCP6.0"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         else:
-            dfload=df_pPCR85
-            N="RCP8.5" 
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+            dfload = load_csv('RCP8_5predict.csv')
+            N="RCP8.5"
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
     
     
