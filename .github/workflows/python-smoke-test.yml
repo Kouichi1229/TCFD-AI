@@ -27,7 +27,7 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Compile Python files
-        run: python -m compileall -q TCFD_AI.py data_loader.py load_data.py ml_model.py plt_data.py txt.py
+        run: python -m compileall -q TCFD_AI.py data_loader.py load_data.py ml_model.py plt_data.py txt.py tests/data_inventory_smoke.py
 
       - name: Validate CSV files and shared loader
         run: python tests/data_inventory_smoke.py
