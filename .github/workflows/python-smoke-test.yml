@@ -1,0 +1,43 @@
+name: Python smoke test
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, "refactor/**"]
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Compile Python files
+        run: python -m compileall -q TCFD_AI.py data_loader.py load_data.py ml_model.py plt_data.py txt.py
+
+      - name: Run Streamlit app smoke test
+        run: |
+          python - <<'PY'
+          from streamlit.testing.v1 import AppTest
+
+          app = AppTest.from_file("TCFD_AI.py", default_timeout=90).run()
+          if app.exception:
+              for error in app.exception:
+                  print(error.message)
+              raise SystemExit("Streamlit app raised an exception")
+          print("Streamlit app completed its initial run without exceptions.")
+          PY
