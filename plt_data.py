@@ -3,33 +3,26 @@ import pandas as pd
 import numpy as np 
 import matplotlib.pyplot as plt
 import seaborn as sns
+from data_loader import load_csv
 #from PIL import Image
 
 #imge = Image.open(".\pic\圖標.png")
 
 
 #讀入資料
-load='file_csv/'
-all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
-sw_df = pd.read_csv(load + 'sw_data.csv')
-bf_dt = pd.read_csv(load +'2014to2020gas.csv')
-df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
-df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
-df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
-df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
-df_pPCR26 =pd.read_csv(load +'RCP2_6predict.csv')
-df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
-df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
-df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
-df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
-df_subscriber = pd.read_csv(load +'subscriber_number.csv')
-bf_dt_oneoffamily = pd.read_csv(load +'2014to2020oneoffamily.csv')
+all_df = load_csv('201302 to 2020_all2.csv')
+bf_dt = load_csv('2014to2020gas.csv')
+df_PCR26 = load_csv('RCP2_6_year.csv')
+df_PCR45 = load_csv('RCP4_5_year.csv')
+df_PCR60 = load_csv('RCP6_0_year.csv')
+df_PCR85 = load_csv('RCP8_5_year.csv')
+bf_dt_oneoffamily = load_csv('2014to2020oneoffamily.csv')
 #RCP2.6_yearoneoffamily.csv
-df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
-df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
-df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
-df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
-df_swdata=pd.read_csv(load +'sw_data.csv')
+df_PCR26_oneoffamily = load_csv('RCP2.6_yearoneoffamily.csv')
+df_PCR45_oneoffamily = load_csv('RCP4.5_yearoneoffamily.csv')
+df_PCR60_oneoffamily = load_csv('RCP6.0_yearoneoffamily.csv')
+df_PCR85_oneoffamily = load_csv('RCP8.5_yearoneoffamily.csv')
+df_swdata=load_csv('sw_data.csv')
 
 
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
