@@ -8,6 +8,7 @@ import plt_data
 import ml_model
 import load_data as ld
 import txt
+from data_loader import load_csv
 #App name
 st.title('2021 AI智慧創新應用競賽 實務組')
 st.header('氣候變遷對大台北公司/產業營運的影響推估')
@@ -16,27 +17,22 @@ st.header('氣候變遷對大台北公司/產業營運的影響推估')
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
 #        Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
 # Loading data 
-load='file_csv/'
-
-all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
-sw_df = pd.read_csv(load + 'sw_data.csv')
-bf_dt = pd.read_csv(load +'2014to2020gas.csv')
-detail_df = pd.read_csv(load +'9908_10y_detail.csv')
-df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
-df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
-df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
-df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
-df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
-df_subscriber = pd.read_csv(load +'subscriber_number.csv')
-df_pPCR26 =pd.read_csv(load +'RCP2_6predict.csv')
-df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
-df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
-df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
-df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
-df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
-df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
-df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
-df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
+all_df = load_csv('201302 to 2020_all2.csv')
+detail_df = load_csv('9908_10y_detail.csv')
+df_PCR26 = load_csv('RCP2_6_year.csv')
+df_PCR45 = load_csv('RCP4_5_year.csv')
+df_PCR60 = load_csv('RCP6_0_year.csv')
+df_PCR85 = load_csv('RCP8_5_year.csv')
+df_gass1 = load_csv('gas_sheet_1.csv')
+df_subscriber = load_csv('subscriber_number.csv')
+df_pPCR26 =load_csv('RCP2_6predict.csv')
+df_pPCR45 =load_csv('RCP4_5predict.csv')
+df_pPCR60 =load_csv('RCP6_0predict.csv')
+df_pPCR85 =load_csv('RCP8_5predict.csv')
+df_PCR26_oneoffamily = load_csv('RCP2.6_yearoneoffamily.csv')
+df_PCR45_oneoffamily = load_csv('RCP4.5_yearoneoffamily.csv')
+df_PCR60_oneoffamily = load_csv('RCP6.0_yearoneoffamily.csv')
+df_PCR85_oneoffamily = load_csv('RCP8.5_yearoneoffamily.csv')
 
 
 ''
