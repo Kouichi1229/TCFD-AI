@@ -367,14 +367,6 @@ elif sidebar=='機器學習':
 
 
 elif sidebar=='未來影響':
-    df_PCR26 = load_csv('RCP2_6_year.csv')
-    df_PCR45 = load_csv('RCP4_5_year.csv')
-    df_PCR60 = load_csv('RCP6_0_year.csv')
-    df_PCR85 = load_csv('RCP8_5_year.csv')
-    df_PCR26_oneoffamily = load_csv('RCP2.6_yearoneoffamily.csv')
-    df_PCR45_oneoffamily = load_csv('RCP4.5_yearoneoffamily.csv')
-    df_PCR60_oneoffamily = load_csv('RCP6.0_yearoneoffamily.csv')
-    df_PCR85_oneoffamily = load_csv('RCP8.5_yearoneoffamily.csv')
     st.subheader('在IPSL_CM5A_LR模組的環境下，RCP各情境的影響')
     # 選項
     select_plot_consumption_RCP = st.radio(
@@ -394,38 +386,38 @@ elif sidebar=='未來影響':
         st.subheader('RCP2.6')
         N="RCP2.6"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR26        
+            dfload = load_csv('RCP2_6_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR26_oneoffamily
+            dfload = load_csv('RCP2.6_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
         
     elif selectbox_RCP=='RCP4.5':
         st.subheader('RCP4.5')
         N="RCP4.5"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR45        
+            dfload = load_csv('RCP4_5_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR45_oneoffamily
+            dfload = load_csv('RCP4.5_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
     elif selectbox_RCP=='RCP6.0':
         st.subheader('RCP6.0')
         N="RCP6.0"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR60        
+            dfload = load_csv('RCP6_0_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR60_oneoffamily
+            dfload = load_csv('RCP6.0_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
     else :
         st.subheader('RCP8.5')
         N="RCP8.5"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR85        
+            dfload = load_csv('RCP8_5_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR85_oneoffamily
+            dfload = load_csv('RCP8.5_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
 
     RCP_choice = st.radio('選擇RCP情境',("RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
