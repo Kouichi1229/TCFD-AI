@@ -1,13 +1,13 @@
 import pandas as pd
 import streamlit as st
+from data_loader import load_csv
 
 
-load='file_csv/'
-all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
+all_df = load_csv('201302 to 2020_all2.csv')
 
 
 def load_csv_file(fileN):
-    df = pd.read_csv(load+str(fileN)+'.csv')
+    df = load_csv(str(fileN)+'.csv')
     st.dataframe(df)
 
 
