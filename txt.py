@@ -4,8 +4,6 @@ import pandas as pd
 import numpy as np
 
 
-df_standard = load_csv('standard_Consumption .csv')
-df_standard_gross_margin = load_csv('gross margin standard.csv')
 
 
 
@@ -28,6 +26,8 @@ def print_movition():
 #p_consumption=predict_dt[predict_dt['Date']==203401]['consumption']
 #計算與標準差了多少
 def count_reduce_infuture(month,pcrFile,p_year,RCP):
+    df_standard = load_csv('standard_Consumption .csv')
+    df_standard_gross_margin = load_csv('gross margin standard.csv')
     standard = df_standard[df_standard['Month']==int(month)]['Consumption-mean']
     standard = pd.to_numeric(standard, errors='coerce')
     standard = float(standard)/1000000
