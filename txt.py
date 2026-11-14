@@ -1,4 +1,3 @@
-from numpy import loads
 import streamlit as st
 from data_loader import load_csv
 import pandas as pd
