@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 from math import sqrt
+from data_loader import load_csv
 
 
 lm = LinearRegression()
@@ -22,7 +23,7 @@ lm = LinearRegression()
 #溫度與使用量ML
 def TXmean_and_gas_ml():
     
-    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     X = all_df['TX-mean']
     y = all_df['Consumption(m^3)']
 
@@ -60,7 +61,7 @@ def TXmean_and_gas_ml():
 #平均體感溫度與使用量ML
 def RTmean_and_gas_ml():
     
-    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     X = all_df['AT-mean']
     y = all_df['Consumption(m^3)']
 
@@ -93,7 +94,7 @@ def RTmean_and_gas_ml():
 
 # 單用戶量與溫度機器學習
 def ML_consumptionforoneoffamily_tx():
-    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     x = all_df['TX-mean'] 
     y = all_df['Consumption for one of family(m^3)'] 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state =22)
@@ -122,7 +123,7 @@ def ML_consumptionforoneoffamily_tx():
 
 # 單用戶量與體感溫度機器學習
 def ML_consumptionforoneoffamily_rt():
-    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     x = all_df['AT-mean'] 
     y = all_df['Consumption for one of family(m^3)'] 
     x_train, x_test, y_train, y_test = train_test_split(x, y, test_size = 0.3, random_state =22)
@@ -156,7 +157,7 @@ def ML_consumptionforoneoffamily_rt():
 # 平均體感和平均溫度 合在一起的圖
 def RtTx_and_gas_ml():
     
-    all_df = pd.read_csv('file_csv/201302 to 2020_all2.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     X1 = all_df['TX-mean']
     X2 = all_df['AT-mean']
     y = all_df['Consumption(m^3)']
