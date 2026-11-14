@@ -35,9 +35,22 @@ jobs:
           from streamlit.testing.v1 import AppTest
 
           app = AppTest.from_file("TCFD_AI.py", default_timeout=90).run()
+
+          def check_page(page_name):
+              app.sidebar.selectbox[0].set_value(page_name).run()
+              if app.exception:
+                  for error in app.exception:
+                      print(error.message)
+                  raise SystemExit(f"Streamlit app raised an exception on page: {page_name}")
+              print(f"Streamlit page passed: {page_name}")
+
           if app.exception:
               for error in app.exception:
                   print(error.message)
-              raise SystemExit("Streamlit app raised an exception")
-          print("Streamlit app completed its initial run without exceptions.")
+              raise SystemExit("Streamlit app raised an exception on initial run")
+
+          for page in ("大台北簡介", "資料集和資料視覺化", "機器學習", "未來影響"):
+              check_page(page)
+
+          print("All Streamlit page smoke tests completed without exceptions.")
           PY
