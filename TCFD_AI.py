@@ -8,6 +8,7 @@ import plt_data
 import ml_model
 import load_data as ld
 import txt
+from data_loader import load_csv
 #App name
 st.title('2021 AI智慧創新應用競賽 實務組')
 st.header('氣候變遷對大台北公司/產業營運的影響推估')
@@ -15,30 +16,6 @@ st.header('氣候變遷對大台北公司/產業營運的影響推估')
 
 # 欄位 : Date	Unit-price(TWD/m^3) 	Revenue(Billion)	Sticker-price(TWD/m^3)	Consumption(m^3)	 gross margin(1 million)	
 #        Month	RH-mean	TX-mean	WD-mean	AT-mean Consumption for one of family(m^3)
-# Loading data 
-load='file_csv/'
-
-all_df = pd.read_csv(load + '201302 to 2020_all2.csv')
-sw_df = pd.read_csv(load + 'sw_data.csv')
-bf_dt = pd.read_csv(load +'2014to2020gas.csv')
-detail_df = pd.read_csv(load +'9908_10y_detail.csv')
-df_PCR26 = pd.read_csv(load +'RCP2_6_year.csv')
-df_PCR45 = pd.read_csv(load +'RCP4_5_year.csv')
-df_PCR60 = pd.read_csv(load +'RCP6_0_year.csv')
-df_PCR85 = pd.read_csv(load +'RCP8_5_year.csv')
-df_gass1 = pd.read_csv(load +'gas_sheet_1.csv')
-df_subscriber = pd.read_csv(load +'subscriber_number.csv')
-df_pPCR26 =pd.read_csv(load +'RCP2_6predict.csv')
-df_pPCR45 =pd.read_csv(load +'RCP4_5predict.csv')
-df_pPCR60 =pd.read_csv(load +'RCP6_0predict.csv')
-df_pPCR85 =pd.read_csv(load +'RCP8_5predict.csv')
-df_C_standard = pd.read_csv(load+'standard_Consumption .csv')
-df_PCR26_oneoffamily = pd.read_csv(load +'RCP2.6_yearoneoffamily.csv')
-df_PCR45_oneoffamily = pd.read_csv(load +'RCP4.5_yearoneoffamily.csv')
-df_PCR60_oneoffamily = pd.read_csv(load +'RCP6.0_yearoneoffamily.csv')
-df_PCR85_oneoffamily = pd.read_csv(load +'RCP8.5_yearoneoffamily.csv')
-
-
 ''
 
 
@@ -63,6 +40,10 @@ if sidebar=='大台北簡介':
     '##### 選擇台北、天母、士林、信義、松山、平等、社子共７個測站的平均資料做分析'
     ''
 elif sidebar=='資料集和資料視覺化':
+    detail_df = load_csv('9908_10y_detail.csv')
+    df_gass1 = load_csv('gas_sheet_1.csv')
+    df_subscriber = load_csv('subscriber_number.csv')
+    all_df = load_csv('201302 to 2020_all2.csv')
     st.subheader('取得原始資料')
     '#### 大台北產品營收 資料集(抓取過去瓦斯收入營收資料)'
 
@@ -405,38 +386,38 @@ elif sidebar=='未來影響':
         st.subheader('RCP2.6')
         N="RCP2.6"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR26        
+            dfload = load_csv('RCP2_6_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR26_oneoffamily
+            dfload = load_csv('RCP2.6_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
         
     elif selectbox_RCP=='RCP4.5':
         st.subheader('RCP4.5')
         N="RCP4.5"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR45        
+            dfload = load_csv('RCP4_5_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR45_oneoffamily
+            dfload = load_csv('RCP4.5_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
     elif selectbox_RCP=='RCP6.0':
         st.subheader('RCP6.0')
         N="RCP6.0"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR60        
+            dfload = load_csv('RCP6_0_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR60_oneoffamily
+            dfload = load_csv('RCP6.0_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
     else :
         st.subheader('RCP8.5')
         N="RCP8.5"
         if select_plot_consumption_RCP=='年總使用量':
-            dfload=df_PCR85        
+            dfload = load_csv('RCP8_5_year.csv')        
             plt_data.draw_pcr(dfload,N)
         else:
-            dfload=df_PCR85_oneoffamily
+            dfload = load_csv('RCP8.5_yearoneoffamily.csv')
             plt_data.draw_pcr_oneodfamily(dfload,N)
 
     RCP_choice = st.radio('選擇RCP情境',("RCP2.6", "RCP4.5","RCP6.0",'RCP8.5'))
@@ -451,20 +432,17 @@ elif sidebar=='未來影響':
 
     #count_reduce_infuture(month,pcrFile,p_year,RCP)
         if RCP_choice =="RCP2.6":
-            dfload=df_pPCR26
+            dfload = load_csv('RCP2_6predict.csv')
             N="RCP2.6"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         elif RCP_choice =="RCP4.5":
-            dfload=df_pPCR45
+            dfload = load_csv('RCP4_5predict.csv')
             N="RCP4.5"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         elif RCP_choice =="RCP6.0":
-            dfload=df_pPCR60
+            dfload = load_csv('RCP6_0predict.csv')
             N="RCP6.0"
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
         else:
-            dfload=df_pPCR85
-            N="RCP8.5" 
-            txt.count_reduce_infuture(month_select,dfload,predict_year,N)
+            dfload = load_csv('RCP8_5predict.csv')
+            N="RCP8.5"
+        txt.count_reduce_infuture(month_select,dfload,predict_year,N)
     
     
